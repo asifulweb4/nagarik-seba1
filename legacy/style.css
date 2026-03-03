@@ -1,0 +1,88 @@
+body {
+    background-color: #0f172a;
+    color: #e2e8f0;
+    font-family: 'Hind Siliguri', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding: 15px;
+}
+
+/* Header & Notice Board */
+.header {
+    text-align: center;
+    padding: 20px 0;
+}
+
+.notice-board {
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 15px;
+    padding: 15px;
+    border: 1px solid #334155;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Table Style */
+.service-card {
+    background: #1e293b;
+    border-radius: 12px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.service-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.service-table th {
+    background: #334155;
+    padding: 12px;
+    text-align: left;
+}
+
+.service-table td {
+    padding: 15px;
+    border-bottom: 1px solid #334155;
+}
+
+.btn-order {
+    background: linear-gradient(90deg, #6366f1, #a855f7);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+/* Form Styling */
+.form-group {
+    margin-bottom: 15px;
+}
+
+input,
+select {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: 1px solid #334155;
+    background: #0f172a;
+    color: white;
+}
+
+.btn-submit {
+    width: 100%;
+    padding: 15px;
+    background: #22c55e;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+}
