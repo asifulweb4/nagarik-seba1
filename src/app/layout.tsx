@@ -1,3 +1,4 @@
+
 import type { Metadata } from "next";
 // import { Inter } from "next/font/google"; // এটি সাময়িকভাবে বন্ধ করে দিলাম
 import "./globals.css";
@@ -18,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="bn">
       {/* inter.className সরিয়ে শুধু সাধারণ body রাখা হলো */}
-      <body>
+      <body suppressHydrationWarning={true}>
         <AuthProvider>
           {children}
         </AuthProvider>
