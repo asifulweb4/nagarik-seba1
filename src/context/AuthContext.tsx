@@ -29,12 +29,23 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const router = useRouter();
 
     useEffect(() => {
+        // ৫ সেকেন্ডের মধ্যে load না হলে জোর করে বন্ধ করো
+        const timeout = setTimeout(() => {
+            setIsLoading(false);
+        }, 5000);
+
         const initAuth = async () => {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (session?.user) {
-                await fetchUserData(session.user.id, session.user.email || '');
-            } else {
+            try {
+                const { data: { session } } = await supabase.auth.getSession();
+                if (session?.user) {
+                    await fetchUserData(session.user.id, session.user.email || '');
+                } else {
+                    setIsLoading(false);
+                }
+            } catch {
                 setIsLoading(false);
+            } finally {
+                clearTimeout(timeout);
             }
         };
 
@@ -52,6 +63,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         );
 
         return () => {
+            clearTimeout(timeout);
             authListener.subscription.unsubscribe();
         };
     }, []);
@@ -72,9 +84,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                     phone: data.phone || '',
                     balance: data.balance || 0,
                 });
-            } else if (error) {
-                console.error("Error fetching user profile:", error);
-                // যদি users table এ data না থাকে তাহলেও basic user set করো
+            } else {
+                console.error("fetchUserData error:", error);
                 setUser({
                     id: userId,
                     name: email.split('@')[0],
@@ -83,7 +94,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 });
             }
         } catch (error) {
-            console.error("Error fetching data:", error);
+            console.error("fetchUserData catch:", error);
         } finally {
             setIsLoading(false);
         }
@@ -99,10 +110,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setIsLoading(false);
             throw error;
         }
-
         if (data?.user) {
             await fetchUserData(data.user.id, data.user.email || '');
         }
+        router.push("/");
     };
 
     const registerUser = async (name: string, email: string, phone: string, pass: string) => {
@@ -115,19 +126,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setIsLoading(false);
             throw error;
         }
-        // users table এ insert করো
         if (data.user) {
-            const { error: insertError } = await supabase
-                .from('users')
-                .insert([{
-                    id: data.user.id,
-                    name,
-                    phone,
-                    balance: 0
-                }]);
-            if (insertError) {
-                console.error("Error inserting user:", insertError);
-            }
+            await supabase.from('users').insert([{
+                id: data.user.id,
+                name,
+                phone,
+                balance: 0
+            }]);
         }
         setIsLoading(false);
     };
@@ -143,12 +148,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     const updateBalance = async (amount: number) => {
         if (!user) return;
         const newBalance = user.balance + amount;
-
         const { error } = await supabase
             .from('users')
             .update({ balance: newBalance })
             .eq('id', user.id);
-
         if (!error) {
             setUser({ ...user, balance: newBalance });
         } else {
