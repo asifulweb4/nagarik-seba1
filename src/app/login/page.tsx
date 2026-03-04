@@ -5,34 +5,37 @@ import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
-
 import { supabase } from "@/lib/supabase";
 
 export default function LoginPage() {
     const [formData, setFormData] = useState({ identifier: "", password: "" });
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState("");
     const { login } = useAuth();
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setError("");
+        setIsSubmitting(true);
+
         try {
             let loginEmail = formData.identifier;
 
-            // If it's a phone number (doesn't contain @)
             if (!formData.identifier.includes("@")) {
                 const { data, error } = await supabase.rpc('get_email_by_phone', { p_phone: formData.identifier });
-
                 if (error || !data) {
-                    throw new Error("এই ফোন নাম্বার দিয়ে কোনো অ্যাকাউন্ট পাওয়া যায়নি।");
+                    throw new Error("এই ফোন নাম্বার দিয়ে কোনো অ্যাকাউন্ট পাওয়া যায়নি।");
                 }
                 loginEmail = data;
             }
 
             await login(loginEmail, formData.password);
-            alert("লগইন সফল হয়েছে!");
             router.push("/");
-        } catch (error: any) {
-            alert("লগইন ব্যর্থ হয়েছে: " + (error.message || "Unknown error"));
+        } catch (err: any) {
+            setError(err.message || "লগইন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
@@ -73,7 +76,7 @@ export default function LoginPage() {
                         />
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-                        <label style={{ fontSize: "0.9rem", color: "var(--text-muted)" }}>পাসওয়ার্ড</label>
+                        <label style={{ fontSize: "0.9rem", color: "var(--text-muted)" }}>পাসওয়ার্ড</label>
                         <input
                             type="password"
                             required
@@ -90,8 +93,18 @@ export default function LoginPage() {
                             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                         />
                     </div>
-                    <button type="submit" className="btn-primary" style={{ marginTop: "10px" }}>
-                        লগইন
+
+                    {error && (
+                        <p style={{ color: "var(--error)", fontSize: "0.9rem", textAlign: "center" }}>{error}</p>
+                    )}
+
+                    <button
+                        type="submit"
+                        className="btn-primary"
+                        disabled={isSubmitting}
+                        style={{ marginTop: "10px", opacity: isSubmitting ? 0.7 : 1, cursor: isSubmitting ? "not-allowed" : "pointer" }}
+                    >
+                        {isSubmitting ? "লগইন হচ্ছে..." : "লগইন"}
                     </button>
                 </form>
                 <p style={{ marginTop: "20px", textAlign: "center", fontSize: "0.9rem", color: "var(--text-muted)" }}>

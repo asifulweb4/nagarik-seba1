@@ -113,7 +113,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (data?.user) {
             await fetchUserData(data.user.id, data.user.email || '');
         }
-        router.push("/");
     };
 
     const registerUser = async (name: string, email: string, phone: string, pass: string) => {
