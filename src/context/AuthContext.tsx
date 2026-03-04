@@ -42,9 +42,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
         const { data: authListener } = supabase.auth.onAuthStateChange(
             async (event, session) => {
-                if (session?.user) {
+                if (event === "SIGNED_IN" && session?.user) {
                     await fetchUserData(session.user.id, session.user.email || '');
-                } else {
+                } else if (event === "SIGNED_OUT") {
                     setUser(null);
                     setIsLoading(false);
                 }
@@ -74,6 +74,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 });
             } else if (error) {
                 console.error("Error fetching user profile:", error);
+                // যদি users table এ data না থাকে তাহলেও basic user set করো
+                setUser({
+                    id: userId,
+                    name: email.split('@')[0],
+                    email: email,
+                    balance: 0,
+                });
             }
         } catch (error) {
             console.error("Error fetching data:", error);
@@ -84,7 +91,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
     const login = async (email: string, pass: string) => {
         setIsLoading(true);
-        const { error } = await supabase.auth.signInWithPassword({
+        const { data, error } = await supabase.auth.signInWithPassword({
             email,
             password: pass,
         });
@@ -92,24 +99,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             setIsLoading(false);
             throw error;
         }
-        router.push("/");
+
+        if (data?.user) {
+            await fetchUserData(data.user.id, data.user.email || '');
+        }
     };
 
     const registerUser = async (name: string, email: string, phone: string, pass: string) => {
         setIsLoading(true);
-        const { error } = await supabase.auth.signUp({
+        const { data, error } = await supabase.auth.signUp({
             email,
             password: pass,
-            options: {
-                data: {
+        });
+        if (error) {
+            setIsLoading(false);
+            throw error;
+        }
+        // users table এ insert করো
+        if (data.user) {
+            const { error: insertError } = await supabase
+                .from('users')
+                .insert([{
+                    id: data.user.id,
                     name,
                     phone,
                     balance: 0
-                }
+                }]);
+            if (insertError) {
+                console.error("Error inserting user:", insertError);
             }
-        });
+        }
         setIsLoading(false);
-        if (error) throw error;
     };
 
     const logout = async () => {

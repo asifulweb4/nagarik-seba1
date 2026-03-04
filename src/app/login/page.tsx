@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/context/AuthContext";
 
 import { supabase } from "@/lib/supabase";
@@ -10,6 +11,7 @@ import { supabase } from "@/lib/supabase";
 export default function LoginPage() {
     const [formData, setFormData] = useState({ identifier: "", password: "" });
     const { login } = useAuth();
+    const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -28,6 +30,7 @@ export default function LoginPage() {
 
             await login(loginEmail, formData.password);
             alert("লগইন সফল হয়েছে!");
+            router.push("/");
         } catch (error: any) {
             alert("লগইন ব্যর্থ হয়েছে: " + (error.message || "Unknown error"));
         }
