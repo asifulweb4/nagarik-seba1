@@ -31,6 +31,7 @@ export default function LoginPage() {
             }
 
             await login(loginEmail, formData.password);
+            alert("লগইন সফল হয়েছে!");
             router.push("/");
         } catch (err: any) {
             setError(err.message || "লগইন ব্যর্থ হয়েছে। আবার চেষ্টা করুন।");
