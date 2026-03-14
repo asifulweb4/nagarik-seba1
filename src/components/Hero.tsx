@@ -3,7 +3,7 @@
 export default function Hero() {
     return (
         <section style={{
-            padding: "10px 0 40px",
+            padding: "0px 0 40px",
             textAlign: "center",
             background: "radial-gradient(circle at center, rgba(99, 102, 241, 0.15) 0%, transparent 70%)"
         }}>
