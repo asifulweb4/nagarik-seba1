@@ -26,7 +26,7 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <div className="container" style={{ paddingTop: "100px" }}>
+      <div className="container" style={{ paddingTop: "80px" }}>
         <div className="glass-card animate-fade-in" style={{
           padding: "20px",
           display: "flex",
