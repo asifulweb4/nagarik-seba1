@@ -4,8 +4,8 @@ import OrderModal from "./OrderModal";
 const services = [
     { id: 1, category: "NID & Smart Card", name: "নাম্বার টু লোকেশন", price: "১৯০৳" },
     { id: 2, category: "NID & Smart Card", name: "NID সাইন কপি (ভোটার নাম্বার)", price: "১৮৳" },
-    { id: 3, category: "NID & Smart Card", name: "ফরম নাম্বার দিয়ে সাইন কপি", price: "২৩৳" },
-    { id: 4, category: "NID & Smart Card", name: "অফিসিয়াল সার্ভার কপি (NID)", price: "৫৯৳" },
+    { id: 3, category: "NID & Smart Card", name: "ফরম নাম্বার দিয়ে সাইন কপি", price: "২৩৳" },
+    { id: 4, category: "NID & Smart Card", name: "অফিসিয়াল সার্ভার কপি (NID)", price: "৫৯৳" },
     { id: 26, category: "NID & Smart Card", name: "সার্ভার কপি", price: "১৫৳" },
     { id: 5, category: "NID & Smart Card", name: "অরিজিনাল স্মার্ট কার্ড", price: "১০৫০৳" },
     { id: 6, category: "NID & Smart Card", name: "স্মার্ট কার্ড pdf", price: "৮৫৳" },
@@ -56,35 +56,35 @@ export default function ServiceGrid() {
     }, [filteredServices]);
 
     return (
-        <section id="services" style={{ padding: "100px 0" }}>
+        <section id="services" style={{ padding: "60px 0" }}>
             <div className="container">
-                <div style={{ textAlign: "center", marginBottom: "60px" }} className="animate-fade-in">
-                    <h2 className="section-title">আমাদের প্রিমিয়াম সার্ভিস সমূহ</h2>
-                    <p style={{ color: "var(--text-muted)", marginTop: "10px" }}>আপনার প্রয়োজনীয় সার্ভিসটি সহজেই খুঁজে নিন</p>
+                <div style={{ textAlign: "center", marginBottom: "40px" }} className="animate-fade-in">
+                    <h2 className="section-title">আমাদের প্রিমিয়াম সার্ভিস সমূহ</h2>
+                    <p style={{ color: "var(--text-muted)", marginTop: "10px" }}>আপনার প্রয়োজনীয় সার্ভিসটি সহজেই খুঁজে নিন</p>
                 </div>
 
                 <div style={{
                     display: "flex",
                     flexDirection: "column",
-                    gap: "30px",
-                    marginBottom: "50px",
+                    gap: "20px",
+                    marginBottom: "40px",
                     alignItems: "center"
                 }} className="animate-slide-up">
                     {/* Search Bar */}
-                    <div style={{ width: "100%", maxWidth: "600px", position: "relative" }}>
+                    <div style={{ width: "100%", maxWidth: "600px" }}>
                         <input
                             type="text"
                             placeholder="সার্ভিস খুঁজুন..."
                             style={{
                                 width: "100%",
-                                padding: "15px 25px",
+                                padding: "12px 20px",
                                 background: "rgba(255, 255, 255, 0.05)",
                                 border: "1px solid var(--glass-border)",
                                 borderRadius: "30px",
                                 color: "white",
                                 fontSize: "1rem",
                                 outline: "none",
-                                transition: "all 0.3s ease"
+                                boxSizing: "border-box",
                             }}
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
@@ -94,24 +94,24 @@ export default function ServiceGrid() {
                     {/* Category Tabs */}
                     <div style={{
                         display: "flex",
-                        gap: "10px",
+                        gap: "8px",
                         flexWrap: "wrap",
-                        justifyContent: "center"
+                        justifyContent: "center",
+                        padding: "0 10px",
                     }}>
                         {categories.map(cat => (
                             <button
                                 key={cat}
                                 onClick={() => setActiveCategory(cat)}
                                 style={{
-                                    padding: "8px 20px",
+                                    padding: "6px 14px",
                                     borderRadius: "20px",
                                     border: "1px solid var(--glass-border)",
                                     background: activeCategory === cat ? "var(--primary)" : "rgba(255, 255, 255, 0.05)",
                                     color: activeCategory === cat ? "white" : "var(--text-muted)",
                                     cursor: "pointer",
-                                    transition: "all 0.3s ease",
-                                    fontSize: "0.9rem",
-                                    fontWeight: "600"
+                                    fontSize: "0.85rem",
+                                    fontWeight: "600",
                                 }}
                             >
                                 {cat}
@@ -122,10 +122,10 @@ export default function ServiceGrid() {
 
                 {Object.keys(groupedServices).length > 0 ? (
                     Object.keys(groupedServices).map((category, index) => (
-                        <div key={category} className="animate-slide-up" style={{ marginBottom: "50px", animationDelay: `${index * 0.1}s` } as any}>
+                        <div key={category} className="animate-slide-up" style={{ marginBottom: "40px", animationDelay: `${index * 0.1}s` } as any}>
                             <h3 style={{
-                                fontSize: "1.5rem",
-                                marginBottom: "25px",
+                                fontSize: "clamp(1.1rem, 4vw, 1.5rem)",
+                                marginBottom: "20px",
                                 paddingLeft: "15px",
                                 borderLeft: "4px solid var(--primary)",
                                 color: "white"
@@ -133,30 +133,32 @@ export default function ServiceGrid() {
 
                             <div style={{
                                 display: "grid",
-                                gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-                                gap: "25px"
+                                gridTemplateColumns: "repeat(auto-fill, minmax(min(300px, 100%), 1fr))",
+                                gap: "15px"
                             }}>
                                 {groupedServices[category].map(service => (
                                     <div key={service.id} className="glass-card" style={{
-                                        padding: "24px",
+                                        padding: "18px",
                                         display: "flex",
                                         flexDirection: "column",
-                                        gap: "20px",
-                                        transition: "all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)",
+                                        gap: "15px",
                                     }}>
-                                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                                            <div>
-                                                <h4 style={{ fontSize: "1.15rem", marginBottom: "5px", color: "white" }}>{service.name}</h4>
-                                                <p style={{ color: "var(--text-muted)", fontSize: "0.85rem" }}>Premium Digital Service</p>
+                                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: "10px" }}>
+                                            <div style={{ flex: 1 }}>
+                                                <h4 style={{ fontSize: "clamp(0.95rem, 3vw, 1.15rem)", marginBottom: "4px", color: "white" }}>
+                                                    {service.name}
+                                                </h4>
+                                                <p style={{ color: "var(--text-muted)", fontSize: "0.8rem" }}>Premium Digital Service</p>
                                             </div>
                                             <div style={{
                                                 color: "var(--primary)",
                                                 fontWeight: "800",
-                                                fontSize: "1.2rem",
+                                                fontSize: "clamp(0.9rem, 3vw, 1.2rem)",
                                                 background: "rgba(99, 102, 241, 0.15)",
-                                                padding: "6px 14px",
+                                                padding: "5px 10px",
                                                 borderRadius: "8px",
-                                                boxShadow: "inset 0 0 10px rgba(99, 102, 241, 0.1)"
+                                                whiteSpace: "nowrap",
+                                                flexShrink: 0,
                                             }}>
                                                 {service.price}
                                             </div>
@@ -166,10 +168,8 @@ export default function ServiceGrid() {
                                             className="btn-primary"
                                             style={{
                                                 width: "100%",
-                                                padding: "12px",
-                                                fontSize: "0.95rem",
-                                                marginTop: "auto",
-                                                boxShadow: "0 4px 15px rgba(99, 102, 241, 0.3)"
+                                                padding: "10px",
+                                                fontSize: "0.9rem",
                                             }}
                                         >
                                             অর্ডার করুন
@@ -180,8 +180,8 @@ export default function ServiceGrid() {
                         </div>
                     ))
                 ) : (
-                    <div style={{ textAlign: "center", padding: "100px 0", color: "var(--text-muted)" }}>
-                        <p style={{ fontSize: "1.2rem" }}>দুঃখিত, কোনো সার্ভিস খুঁজে পাওয়া যায়নি।</p>
+                    <div style={{ textAlign: "center", padding: "60px 0", color: "var(--text-muted)" }}>
+                        <p style={{ fontSize: "1.1rem" }}>দুঃখিত, কোনো সার্ভিস খুঁজে পাওয়া যায়নি।</p>
                         <button
                             onClick={() => { setSearchQuery(""); setActiveCategory("All"); }}
                             style={{

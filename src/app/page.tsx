@@ -26,21 +26,30 @@ export default function Home() {
   return (
     <main>
       <Navbar />
-      <div className="container" style={{ paddingTop: "120px" }}>
+      <div className="container" style={{ paddingTop: "100px" }}>
         <div className="glass-card animate-fade-in" style={{
-          padding: "30px",
+          padding: "20px",
           display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
+          flexDirection: "column",
+          gap: "12px",
           background: "linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(168, 85, 247, 0.1))",
           border: "1px solid rgba(255, 255, 255, 0.1)"
         }}>
           <div>
-            <h2 style={{ fontSize: "1.8rem", marginBottom: "5px" }}>আসসালামু আলাইকুম, {user.name}!</h2>
-            <p style={{ color: "var(--text-muted)" }}>আপনার আজকের সার্ভিস ড্যাশবোর্ডে আপনাকে স্বাগতম।</p>
+            <h2 style={{
+              fontSize: "clamp(1.2rem, 5vw, 1.8rem)",
+              marginBottom: "5px",
+            }}>
+              আসসালামু আলাইকুম, {user.name}!
+            </h2>
+            <p style={{ color: "var(--text-muted)", fontSize: "clamp(0.85rem, 3vw, 1rem)" }}>
+              আপনার আজকের সার্ভিস ড্যাশবোর্ডে আপনাকে স্বাগতম।
+            </p>
           </div>
-          <div style={{ textAlign: "right" }}>
-            <p style={{ fontSize: "0.9rem", color: "var(--text-muted)", marginBottom: "5px" }}>সার্ভিস এক্সেস টোকেন</p>
+          <div>
+            <p style={{ fontSize: "0.85rem", color: "var(--text-muted)", marginBottom: "5px" }}>
+              সার্ভিস এক্সেস টোকেন
+            </p>
             <div style={{
               background: "rgba(34, 197, 94, 0.1)",
               color: "#22c55e",
