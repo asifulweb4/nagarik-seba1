@@ -30,13 +30,13 @@ export default function RechargePage() {
     const minAmount = accountType === "Personal" ? 500 : 1200;
 
     const handleCopy = () => {
-        navigator.clipboard.writeText("01873290088");
+        navigator.clipboard.writeText("01747156607");
         setIsCopied(true);
         setTimeout(() => setIsCopied(false), 2000);
     };
 
     const handleBkashCopy = () => {
-        navigator.clipboard.writeText("01603800458");
+        navigator.clipboard.writeText("01333858547");
         setIsBkashCopied(true);
         setTimeout(() => setIsBkashCopied(false), 2000);
     };
@@ -142,7 +142,8 @@ export default function RechargePage() {
                             }}>
                                 <p style={{ fontSize: "0.8rem", color: "#ec4899", fontWeight: "700", marginBottom: "5px" }}>bKash (Personal)</p>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
-                                    <p style={{ fontSize: "1.1rem", color: "white", fontWeight: "800" }}>01603800458</p>
+        
+                                    <p style={{ fontSize: "1.1rem", color: "white", fontWeight: "800" }}>01333858547</p>
                                     <button
                                         onClick={handleBkashCopy}
                                         style={{
@@ -192,7 +193,7 @@ export default function RechargePage() {
                             }}>
                                 <p style={{ fontSize: "0.8rem", color: "#f97316", fontWeight: "700", marginBottom: "5px" }}>Nagad (Personal)</p>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
-                                    <p style={{ fontSize: "1.1rem", color: "white", fontWeight: "800" }}>01873290088</p>
+                                    <p style={{ fontSize: "1.1rem", color: "white", fontWeight: "800" }}>01747156607</p>
                                     <button
                                         onClick={handleCopy}
                                         style={{
