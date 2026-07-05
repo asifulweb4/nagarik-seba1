@@ -30,7 +30,7 @@ export default function RechargePage() {
     const minAmount = accountType === "Personal" ? 500 : 1200;
 
     const handleCopy = () => {
-        navigator.clipboard.writeText("01747156607");
+        navigator.clipboard.writeText("01739815803");
         setIsCopied(true);
         setTimeout(() => setIsCopied(false), 2000);
     };
@@ -193,7 +193,7 @@ export default function RechargePage() {
                             }}>
                                 <p style={{ fontSize: "0.8rem", color: "#f97316", fontWeight: "700", marginBottom: "5px" }}>Nagad (Personal)</p>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
-                                    <p style={{ fontSize: "1.1rem", color: "white", fontWeight: "800" }}>01747156607</p>
+                                    <p style={{ fontSize: "1.1rem", color: "white", fontWeight: "800" }}>01739815803</p>
                                     <button
                                         onClick={handleCopy}
                                         style={{
