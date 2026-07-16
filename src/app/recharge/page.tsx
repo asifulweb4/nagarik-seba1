@@ -36,7 +36,7 @@ export default function RechargePage() {
     };
 
     const handleBkashCopy = () => {
-        navigator.clipboard.writeText("01602795086");
+        navigator.clipboard.writeText("01349299063");
         setIsBkashCopied(true);
         setTimeout(() => setIsBkashCopied(false), 2000);
     };
@@ -143,7 +143,7 @@ export default function RechargePage() {
                                 <p style={{ fontSize: "0.8rem", color: "#ec4899", fontWeight: "700", marginBottom: "5px" }}>bKash (Personal)</p>
                                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "10px" }}>
         
-                                    <p style={{ fontSize: "1.1rem", color: "white", fontWeight: "800" }}>01602795086</p>
+                                    <p style={{ fontSize: "1.1rem", color: "white", fontWeight: "800" }}>01349299063</p>
                                     <button
                                         onClick={handleBkashCopy}
                                         style={{
